@@ -51,6 +51,7 @@ module ForemanAnsible
     end
 
     config.to_prepare do
+      ::JobInvocation.include ForemanAnsible::JobInvocationExtensions
       ::Host::Managed.prepend ForemanAnsible::HostManagedExtensions
       ::JobTemplate.prepend ForemanAnsible::JobTemplateExtensions
       ::Hostgroup.include ForemanAnsible::HostgroupExtensions

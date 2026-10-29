@@ -82,6 +82,17 @@ Foreman::Plugin.register :foreman_ansible do
                               'If set, overrides foreman_tasks_proxy_batch_size setting for Ansible jobs.'),
               default: nil,
               full_name: N_('Proxy tasks batch size for Ansible')
+      setting 'ansible_execution_driver',
+              type: :string,
+              description: N_('Experimental execution backend used for newly created Ansible jobs.'),
+              default: ForemanAnsible::DEFAULT_EXECUTION_DRIVER,
+              full_name: N_('Ansible execution driver'),
+              collection: proc {
+                ForemanAnsible.execution_drivers.names.to_h do |name|
+                  adapter = ForemanAnsible.execution_drivers.fetch(name)
+                  [name, adapter.humanized_name]
+                end
+              }
     end
   end
 

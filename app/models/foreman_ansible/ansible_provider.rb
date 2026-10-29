@@ -120,6 +120,11 @@ if defined? ForemanRemoteExecution
           value.presence && value.to_i
         end
 
+        def execution_action(job_invocation)
+          driver_name = job_invocation.ansible_execution_driver.presence || ForemanAnsible::DEFAULT_EXECUTION_DRIVER
+          ForemanAnsible.execution_drivers.fetch(driver_name).execution_action(job_invocation)
+        end
+
         private
 
         def ansible_command?(template)
